@@ -19,40 +19,64 @@ public class Converter
     public static void main(String[] args)
     {
         
-        // TODO access default folder, and create default folder if not existent
+        //
+        final String home = System.getProperty("user.home");
         
-        // TODO access uploaded CSV file
-        String fileName = "C:\\Users\\phill\\Desktop\\AAHackathon\\Sept.csv";
-        File file = new File(fileName);
+        final String folderLocation = home + File.separator + "Documents" + File.separator + "NEWPEK";
+        
+        File newFold = new File(folderLocation);
+        newFold.mkdir();
+        
+        Scanner input = new Scanner(System.in);
+        
+        System.out.print("Enter name of file: ");
+        
+        String fileName = input.nextLine();
+        
+        final String fileLocation = folderLocation + File.separator + fileName + ".csv";
+
+        File file = new File(fileLocation);
         
         String[] attributeArr = new String[25];
         ArrayList<Donor> donorList = new ArrayList<>();
-        int index = 0;
+        int index = 0, count = 0;
+        
+        System.out.println(fileLocation);
         
         try
         {
          
             Scanner inputStream = new Scanner(file);
-            inputStream.useDelimiter(",");
+            inputStream.useDelimiter(",|\\n");
             
             // while data exists to be read
             while(inputStream.hasNext())
             {
                 
-                // cycles through all 25 attributes
-                while(index < 25)
+                String data = inputStream.next();
+            
+                // gets rid of quotes
+                data = data.replace("\"", "");
+                
+                attributeArr[index] = data;
+                
+                index++;
+                
+                if(index > 24)
                 {
-                    
-                    String data = inputStream.next();
                 
-                    // gets rid of quotes
-                    data = data.replace("\"", "");
+                    index = 0;
                     
-                    attributeArr[index] = data;
-                
                 }
                 
-                donorList.add(new Donor(attributeArr));
+                if(count > 24 && index > 24)
+                {
+                    
+                    donorList.add(new Donor(attributeArr));
+                    
+                }
+                
+                count++;
                 
             }
             
@@ -66,6 +90,16 @@ public class Converter
             //e.printStackTrace();
         
         }
+        
+    }
+    
+    public String sort(ArrayList<Donor> donorList) {
+        
+        String sortedString = "";
+        
+        
+        
+        return sortedString;
         
     }
     
