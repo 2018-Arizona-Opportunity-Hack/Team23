@@ -1,4 +1,4 @@
-package converter; // NetBeans IDE
+//package converter; // NetBeans IDE
 
 /**
  * Donor. Organizes the attributes into their respective donors.
