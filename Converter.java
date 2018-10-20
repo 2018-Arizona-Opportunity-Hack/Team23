@@ -39,7 +39,7 @@ public class Converter
         
         String[] attributeArr = new String[25];
         ArrayList<Donor> donorList = new ArrayList<>();
-        int index = 0, count = 0;
+        int index = 0;
         
         System.out.println(fileLocation);
         
@@ -47,6 +47,10 @@ public class Converter
         {
          
             Scanner inputStream = new Scanner(file);
+            inputStream.useDelimiter("\\n");
+            
+            inputStream.next();
+            
             inputStream.useDelimiter(",|\\n");
             
             // while data exists to be read
@@ -58,25 +62,21 @@ public class Converter
                 // gets rid of quotes
                 data = data.replace("\"", "");
                 
+                //System.out.println("Index: " + index + "\nData: " + data);
+                
+                System.out.print(data);
+                
                 attributeArr[index] = data;
                 
                 index++;
                 
                 if(index > 24)
                 {
-                
+                    
+                    //donorList.add(new Donor(attributeArr));
                     index = 0;
                     
                 }
-                
-                if(count > 24 && index > 24)
-                {
-                    
-                    donorList.add(new Donor(attributeArr));
-                    
-                }
-                
-                count++;
                 
             }
             
@@ -90,7 +90,18 @@ public class Converter
             //e.printStackTrace();
         
         }
+        finally
+        {
+            
+            for(int i = 0 ; i < donorList.size() ; i++)
+            {
+
+                //System.out.println((donorList.get(i)).toString());
+
+            }
         
+        }
+    
     }
     
     public String sort(ArrayList<Donor> donorList) {
