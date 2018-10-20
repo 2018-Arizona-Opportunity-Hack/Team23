@@ -1,0 +1,81 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package opportunity2018;
+
+import java.util.*;
+import java.util.List;
+import java.util.Arrays;
+/**
+ *
+ * @author CapedBaldy
+ */
+public class txtMaker 
+{
+    String strtDate, endDate;
+    double startAmnt, dist, totalAfterCollection, finalTotal;
+    double waste, stMary, tefap, grocery, corp, church, individual = 0;
+    List<String> srcs;
+    List<Double> amnt;
+    
+    double totalCollected = 0;
+    
+    public txtMaker(ArrayList<Donor> donations, ArrayList<int> customers)
+    {
+        strtDate = strt;
+        endDate = end;
+        srcs = Sources;
+        amnt = donations[22];
+        dist = distributed;
+        
+        for (Double donor : donations) 
+        {
+            if(donor.getLastName()=="Waste")
+            {
+                waste += donor.getWeight();
+            }
+            else if(donor.getFirstName().contains("St. Mary"))
+            {
+                totalCollected += donor.getWeight();
+                stMary += donor.getWeight();
+            }
+            else if(donor.getFirstName().contains("TEFAP"))
+            {
+                totalCollected += donor.getWeight();
+                tefap += donor.getWeight();
+            }
+            else if(donor.getFirstName().contains("#"))
+            {
+                totalCollected += donor.getWeight();
+                grocery += donor.getWeight();
+            }
+            else if(donor.getDonationSource().contains("ness"))
+            {
+                totalCollected += donor.getWeight();
+                corp += donor.getWeight();
+            }
+            else if(donor.getDonationSource().contains("urch"))
+            {
+                totalCollected += donor.getWeight();
+                church += donor.getWeight();
+            }
+            else if(donor.getDonationSource().contains("vidual"))
+            {
+                totalCollected += donor.getWeight();
+                individual += donor.getWeight();
+            }
+            dist = customers.size() * 40; 
+            
+            
+                    }
+        
+        
+        totalAfterCollection = startAmnt + totalCollected;
+        
+        finalTotal = totalAfterCollection - waste - dist;
+    }
+    
+    
+}
