@@ -1,4 +1,9 @@
+//package converter; // NetBeans IDE
 
+/**
+ * Donor. Organizes the attributes into their respective donors.
+ * @author Phillip N, Emilio E, Kai W
+ */
 public class Donor 
 {
 
@@ -33,7 +38,7 @@ public class Donor
 		this.value = Double.parseDouble(arr[22]);
 		this.memo = arr[24];
 	}
-	
+
 	public int getDonationID()
 	{
 		return donationID;
@@ -158,4 +163,5 @@ public class Donor
 	{
 		return memo;
 	}
+  
 }
