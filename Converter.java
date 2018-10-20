@@ -22,28 +22,37 @@ public class Converter
         // TODO access default folder, and create default folder if not existent
         
         // TODO access uploaded CSV file
-        //String fileName = "";
+        String fileName = "C:\\Users\\phill\\Desktop\\AAHackathon\\Sept.csv";
         File file = new File(fileName);
         
-        ArrayList<String> dataList = new ArrayList<>();
-      
+        String[] attributeArr = new String[25];
+        ArrayList<Donor> donorList = new ArrayList<>();
+        int index = 0;
+        
         try
         {
          
             Scanner inputStream = new Scanner(file);
             inputStream.useDelimiter(",");
             
+            // while data exists to be read
             while(inputStream.hasNext())
             {
                 
-                String data = inputStream.next();
+                // cycles through all 25 attributes
+                while(index < 25)
+                {
+                    
+                    String data = inputStream.next();
                 
-                data = data.replace("\"", "");
+                    // gets rid of quotes
+                    data = data.replace("\"", "");
+                    
+                    attributeArr[index] = data;
                 
-                if(!data.equals(""))
-                    System.out.print(data + ", ");// store data
-                else
-                    System.out.print("Unspecified, ");// store unspecified data
+                }
+                
+                donorList.add(new Donor(attributeArr));
                 
             }
             
@@ -61,4 +70,3 @@ public class Converter
     }
     
 }
-
