@@ -2,6 +2,7 @@
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,10 +20,55 @@ public class txtMaker
     // weights (lbs)
     double waste = 0, stMary = 0, tefap = 0, grocery = 0, corp = 0, church = 0, individual = 0, start = 0;
     
+    int totalDonees = 0, clients = 0;
+    
     double totalCollected = 0;
     
-    public txtMaker(ArrayList<Donor> donorList, ArrayList<Donee> doneeList)
+    public txtMaker(ArrayList<Donor> donorList, ArrayList<Donee> doneeList, File prevMonth)
     {
+        
+        clients = doneeList.size();
+        
+        try
+        {
+
+            Scanner inputStream = new Scanner(prevMonth);
+            String firstLine = inputStream.nextLine();
+            firstLine = firstLine.replace("Starting Inventory:\t\t","");
+            start = Double.parseDouble(firstLine);
+            inputStream.close();
+
+        } catch (FileNotFoundException ex)
+        {
+
+            //System.out.println("File does not exist.");
+            Scanner scanner = new Scanner(System.in);
+            boolean exit = false;
+            
+            do
+            {
+                
+                System.out.print("Please input starting inventory (lbs): ");
+                
+                if(scanner.hasNextDouble()) {
+                    
+                   exit = true;
+                    
+                }
+                else
+                {
+                    
+                    System.out.println("Invalid Inventory(lbs)");
+                    scanner.next();
+                    
+                }
+                
+            } while(!exit);
+            
+            start = scanner.nextDouble();
+            scanner.close();
+        
+        }
         
         for(Donor donor : donorList)
         {
@@ -53,21 +99,21 @@ public class txtMaker
                 totalCollected += donor.getWeight();
                 grocery += donor.getWeight();
             }
-            else if(donor.getDonationSource().toUpperCase().contains("NESS"))
+            else if(donor.getDonationSource().toUpperCase().contains("BUSINESS"))
             {
                 
                 totalCollected += donor.getWeight();
                 corp += donor.getWeight();
             
             }
-            else if(donor.getDonationSource().toUpperCase().contains("URCH"))
+            else if(donor.getDonationSource().toUpperCase().contains("CHURCH"))
             {
                 
                 totalCollected += donor.getWeight();
                 church += donor.getWeight();
             
             }
-            else if(donor.getDonationSource().toUpperCase().contains("VIDIUAL"))
+            else if(donor.getDonationSource().toUpperCase().contains("INDIVIDUAL"))
             {
                 
                 totalCollected += donor.getWeight();
@@ -77,8 +123,6 @@ public class txtMaker
         
         }
         
-        int totalDonees = 0;
-        
         for(Donee donee : doneeList)
         {
                 
@@ -86,7 +130,7 @@ public class txtMaker
                 
         }
         
-        dist = totalDonees * 40;
+        dist = clients * 40;
         
         totalAfterCollection = start + totalCollected;
         
@@ -99,22 +143,28 @@ public class txtMaker
         try
         {
             
-            String fileName = donorList.get(0).getMonthYear() + "_" + donorList.get(donorList.size()).getMonthYear() + ".txt";
+            String fileName = donorList.get(0).getMonthYear() + "_" + donorList.get(donorList.size() - 1).getMonthYear() + ".txt";
             File file = new File(folderLocation + File.separator +  fileName);
             FileWriter fw = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(fw);
             try (PrintWriter outFile = new PrintWriter(bw)) {
-                outFile.println("Start:\t" + start);
-                outFile.println("Grocery:\t" + grocery);
-                outFile.println("Individual:\t" + individual);
-                outFile.println("Corp:\t" + corp);
-                outFile.println("Church:\t" + church);
-                outFile.println("TEFAP:\t" + tefap);
-                outFile.println("St. Mary:\t" + stMary);
-                outFile.println("Sub Total:\t" + totalAfterCollection);
-                outFile.println("Waste:\t" + waste);
-                outFile.println("Distributed:\t" + dist);
-                outFile.println("Final Total:\t" + finalTotal);
+                outFile.println("Starting Inventory:\t\t" + start);
+                outFile.println("Number of Clients:\t\t" + clients);
+                outFile.println("Total Served:\t\t\t" + totalDonees);
+                outFile.println("Distributed:\t\t\t" + dist);
+                outFile.println();
+                outFile.println("Inventory " + donorList.get(0).getDonatedOn() + "-" + donorList.get(donorList.size() - 1).getDonatedOn());
+                outFile.println("----------------------------------------");
+                outFile.println("Grocery Store:\t\t\t" + grocery);
+                outFile.println("Individual:\t\t\t" + individual);
+                outFile.println("Corperate/Organization:\t\t" + corp);
+                outFile.println("Church:\t\t\t\t" + church);
+                outFile.println("TEFAP:\t\t\t\t" + tefap);
+                outFile.println("St. Mary's - senior food fox:\t" + stMary);
+                outFile.println("Total:\t\t\t\t" + totalAfterCollection);
+                outFile.println("Waste (minus):\t\t\t" + waste);
+                outFile.println("Total:\t\t\t\t" + finalTotal);
+                
                 
             }
             
