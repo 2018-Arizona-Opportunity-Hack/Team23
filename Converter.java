@@ -1,23 +1,18 @@
 //package converter; // NetBeans IDE
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.imageio.ImageIO;
-
 /**
  * Converter. Converts CSV files to automatically organized output.
  * @author Phillip N, Emilio E, Kai W
+ * @version 20.October.2018
  */
 public class Converter
 {
-	String month, year;
 
     /**
      * main. Entry point into the program.
@@ -36,7 +31,7 @@ public class Converter
         
         Scanner input = new Scanner(System.in);
         
-        System.out.print("Enter name of file: ");
+        System.out.print("Enter name of CSV file of donors for this month: ");
         
         String fileName = input.nextLine();
         
@@ -47,36 +42,80 @@ public class Converter
         String[] attributeArr = new String[25];
         ArrayList<Donor> donorList = new ArrayList<>();
         
+        System.out.print("Enter name of CSV file of donees for this month: ");
+        
+        String doneeFileName = input.nextLine();
+        
+        final String doneeFileLocation = folderLocation + File.separator + doneeFileName + ".csv";
+        
+        File doneeFile = new File(doneeFileLocation);
+        
+        String[] doneeAttributeArr = new String[18];
+        ArrayList<Donee> doneeList = new ArrayList<>();
+        
         System.out.println(fileLocation);
+        
+        File prevFile = new File("");
         
         try
         {
          
-            Scanner inputStream = new Scanner(file);
-            inputStream.useDelimiter("\\n");
-            
-            inputStream.next();
-            
-            // while data exists to be read
-            while(inputStream.hasNext())
+            try (Scanner inputStream = new Scanner(file))
             {
                 
-                List<String> data = parseLine(inputStream.next());
+                inputStream.useDelimiter("\\n");
                 
-                //System.out.println("Index: " + index + "\nData: " + data);
+                inputStream.next();
                 
-                for(int i = 0 ; i < attributeArr.length ; i++)
+                // while data exists to be read
+                while(inputStream.hasNext())
                 {
                     
-                    attributeArr[i] = (data.get(i)).replace("\"","");
+                    List<String> data = parseLine(inputStream.next());
+                    
+                    //System.out.println("Index: " + index + "\nData: " + data);
+                    
+                    for(int i = 0 ; i < attributeArr.length ; i++)
+                    {
+                        
+                        attributeArr[i] = (data.get(i)).replace("\"","");
+                        
+                    }
+                    
+                    donorList.add(new Donor(attributeArr));
                     
                 }
+            }
+           
+            try (Scanner inputStream = new Scanner(doneeFile))
+            {
                 
-                donorList.add(new Donor(attributeArr));
+                inputStream.useDelimiter("\\n");
+                
+                inputStream.next();
+                
+                // while data exists to be read
+                while(inputStream.hasNext())
+                {
                     
+                    List<String> data = parseLine(inputStream.next());
+                    
+                    //System.out.println("Index: " + index + "\nData: " + data);
+                    
+                    for(int i = 0 ; i < doneeAttributeArr.length ; i++)
+                    {
+                        
+                        doneeAttributeArr[i] = (data.get(i)).replace("\"","");
+                        
+                    }
+                    
+                    doneeList.add(new Donee(doneeAttributeArr));
+                    
+                }
             }
             
-            inputStream.close();
+            String prevFileName = folderLocation + File.separator + donorList.get(0).getMonthYear(true) + "_" + donorList.get(donorList.size() - 1).getMonthYear(true) + ".txt";
+            prevFile = new File(prevFileName);
             
         }
         catch (FileNotFoundException e)
@@ -89,26 +128,9 @@ public class Converter
         finally
         {
             
-            ArrayList<Donee> doneeList = new ArrayList<>();
+            txtMaker textFile = new txtMaker(donorList, doneeList, prevFile);
             
-            txtMaker textFile = new txtMaker(donorList, doneeList);
-            
-            textFile.saveTXT(folderLocation);
-            
-            /*for(int i = 0 ; i < donorList.size() ; i++)
-            {
-                System.out.println((donorList.get(i)).toString());
-            }*/
-            
-            //TODO
-            BufferedImage bImage = new BufferedImage(100,100,BufferedImage.TYPE_INT_RGB);
-            Graphics2D g = bImage.createGraphics();
-            g.
-            
-            g.dispose();
-            RenderedImage rImage = bImage;
-            File imageFile = new File("PieChart " + month + ", " + year + ".jpg");
-            ImageIO.write(rImage, "jpg", imageFile);
+            textFile.saveTXT(folderLocation, donorList);
         
         }
     
@@ -123,6 +145,7 @@ public class Converter
         return sortedString;
         
     }
+    
     
     /**
      * parseLine. Unedited source code taken from 

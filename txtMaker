@@ -1,5 +1,10 @@
 //package converter; // NetBeans IDE
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
+import javax.imageio.ImageIO;
 
 /**
  * txtMaker. Creates and edits a new txt file containing calculated data.
@@ -136,6 +142,55 @@ public class txtMaker
         
         finalTotal = totalAfterCollection - waste - dist;
         
+    }
+    
+    Rectangle a = new Rectangle(0, 0, 1000, 1000);
+    BufferedImage bImage = new BufferedImage(1000,1000,BufferedImage.TYPE_INT_RGB);
+    Graphics2D g = bImage.createGraphics();
+    
+    public void sourcePieChart(ArrayList<Donor> donorList)
+    {
+        Color[] color = {Color.blue, Color.green, Color.orange, Color.red, Color.magenta, Color.yellow};
+        double[] percent = {grocery, individual, corp, church, tefap, stMary};
+        String[] name = {"Grocery Store","Individual","Corperate/Organization","Church","TEFAP","St. Mary's - senior food box"};
+        
+        PieChartMaker sourcePieChart = new PieChartMaker();
+        PieChart[] chart = sourcePieChart.createChart(color.length, color, percent, name);
+        sourcePieChart.createChart(6, color, percent, name);
+        sourcePieChart.drawChart(g, a, chart);
+        RenderedImage rImage = bImage;
+        File imageFile = new File("sourcePie"+donorList.get(0).getMonthYear()+".jpg");
+        
+        try 
+            {
+				ImageIO.write(rImage, "jpg", imageFile);
+			} 
+            catch (IOException e) 
+            {
+				e.printStackTrace();
+			}
+    }
+    public void wastePieChart(ArrayList<Donor> donorList)
+    {
+        Color[] color = {Color.green, Color.black};
+        double[] percent = {totalCollected, waste};
+        String[] name = {"totalCollected", "waste"};
+                
+        PieChartMaker sourcePieChart = new PieChartMaker();
+        PieChart[] chart = sourcePieChart.createChart(color.length, color, percent, name);
+        sourcePieChart.createChart(6, color, percent, name);
+        sourcePieChart.drawChart(g, a, chart);
+        RenderedImage rImage = bImage;
+        File imageFile = new File("wastePie"+donorList.get(0).getMonthYear()+".jpg");
+        
+        try 
+            {
+				ImageIO.write(rImage, "jpg", imageFile);
+			} 
+            catch (IOException e) 
+            {
+				e.printStackTrace();
+			}
     }
     public void saveTXT(String folderLocation, ArrayList<Donor> donorList)
     {
