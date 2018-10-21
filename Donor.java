@@ -203,7 +203,7 @@ public class Donor
      */
     public String getMonthYear()
     {
-        String[] date = donatedOn.split("/");
+        String[] date = donatedOn.split("-");
         String month = "";
         String monthYear;
         String year = date[2];
@@ -259,9 +259,10 @@ public class Donor
      */
     public String getMonthYear(boolean prev)
     {
-        String[] date = donatedOn.split("/");
+        String[] date = donatedOn.split("-");
         String month = "";
         String monthYear;
+        System.out.println("date[0]: " + date[0]);
         String year = date[2];
         switch (Integer.parseInt(date[0]) - 1)
         {

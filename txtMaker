@@ -203,7 +203,7 @@ public class txtMaker
                 outFile.println("Corperate/Organization:\t\t" + corp);
                 outFile.println("Church:\t\t\t\t" + church);
                 outFile.println("TEFAP:\t\t\t\t" + tefap);
-                outFile.println("St. Mary's - senior food fox:\t" + stMary);
+                outFile.println("St. Mary's - senior food box:\t" + stMary);
                 outFile.println("Total:\t\t\t\t" + totalAfterCollection);
                 outFile.println("Waste (minus):\t\t\t" + waste);
                 outFile.println("Total:\t\t\t\t" + finalTotal);
