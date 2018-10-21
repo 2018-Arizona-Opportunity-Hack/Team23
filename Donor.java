@@ -1,4 +1,9 @@
-//package converter; // NetBeans IDE
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package opportunity2018;
 
 /**
  * Donor. Organizes the attributes into their respective donors.
@@ -139,6 +144,44 @@ public class Donor
     public String getDonatedOn()
     {
         return donatedOn;
+    }
+    
+    public String getMonthYear()
+    {
+        String[] date = donatedOn.split("/");
+        String month = "";
+        String monthYear = "";
+        switch (date[0])
+        {
+            case"1":
+                month = "January";
+            case"2":
+                month = "Febreuary";
+            case"3":
+                month = "March";
+            case"4":
+                month = "April";
+            case"5":
+                month = "May";
+            case"6":
+                month = "June";
+            case"7":
+                month = "July";
+            case"8":
+                month = "August";
+            case"9":
+                month = "September";
+            case"10":
+                month = "October";
+            case"11":
+                month = "November";
+            case"12":
+                month = "December";
+                break;
+        }
+        String year = date[2];
+        monthYear = month + year;
+        return monthYear;
     }
 
     public String getFoodCategory()
