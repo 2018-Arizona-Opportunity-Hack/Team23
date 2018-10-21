@@ -7,9 +7,9 @@
 public class Donor 
 {
 
-    private int donationID, donorID, zipCode, quantity;
-    private double weight, value;
-    private String companyName, firstName, middleName, lastName, emailAddress, spouseName, greeting, streetAddress, apartment, city, state, donorType, donationType, donationSource, donatedOn, foodCategory, foodName, quantityType, memo;
+    final private int donationID, donorID, zipCode;
+    final private double weight, value, quantity;
+    final private String companyName, firstName, middleName, lastName, emailAddress, spouseName, greeting, streetAddress, apartment, city, state, donorType, donationType, donationSource, donatedOn, foodCategory, foodName, quantityType, memo;
     
     public Donor(String[] arr)
     {
@@ -27,24 +27,33 @@ public class Donor
 	this.apartment = arr[10];
 	this.city = arr[11];
 	this.state = arr[12];
-	this.zipCode = Integer.parseInt(arr[13]);
+        if(!arr[13].equals(""))
+        {
+            this.zipCode = Integer.parseInt(arr[13]);
+        }
+        else
+        {
+            
+            zipCode = -1;
+            
+        }
 	this.donorType = arr[14];
 	this.donationType = arr[15];
 	this.donationSource = arr[16];
 	this.donatedOn = arr[17];
 	this.foodCategory = arr[18];
 	this.foodName = arr[19];
-	this.quantity = Integer.parseInt(arr[20]);
+	this.quantity = Double.parseDouble(arr[20]);
 	this.quantityType = arr[21];
-	this.weight = Double.parseDouble(arr[21]);
-	this.value = Double.parseDouble(arr[22]);
+	this.weight = Double.parseDouble(arr[22]);
+	this.value = Double.parseDouble(arr[23]);
 	this.memo = arr[24];
 
     }
 
     public int getDonationID()
     {
-    	return donationID;
+	return donationID;
     }
 	
     public int getDonorID()
@@ -142,7 +151,7 @@ public class Donor
         return foodName;
     }
 
-    public int getQuantity()
+    public double getQuantity()
     {
         return quantity;
     }
@@ -170,7 +179,7 @@ public class Donor
     @Override
     public String toString()
     {
-    	return(donationID + memo);
+        return("Donation ID: " + donationID + ", Dear: " + greeting);
     }
 
 }
