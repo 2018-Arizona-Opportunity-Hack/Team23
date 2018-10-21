@@ -1,8 +1,14 @@
 //package converter; // NetBeans IDE
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 /**
+ * txtMaker. Creates and edits a new txt file containing calculated data.
  * 
  * @author Emilio E, Phillip N, Kai W.
  * @version 20.October.2018
@@ -10,60 +16,112 @@ import java.util.*;
 public class txtMaker 
 {
     double dist, totalAfterCollection, finalTotal;
-    double waste, stMary, tefap, grocery, corp, church, individual, start = 0;
+    // weights (lbs)
+    double waste = 0, stMary = 0, tefap = 0, grocery = 0, corp = 0, church = 0, individual = 0, start = 0;
     
     double totalCollected = 0;
     
-    public txtMaker(ArrayList<Donor> donorList, ArrayList<Integer> served)
+    public txtMaker(ArrayList<Donor> donorList, ArrayList<Donee> doneeList)
     {
         
-        for (Donor donor : donorList) 
+        for(Donor donor : donorList)
         {
-            if(donor.getLastName()=="Waste")
+        
+            if(donor.getLastName().toUpperCase().equals("WASTE"))
             {
+                
                 waste += donor.getWeight();
+                totalCollected -= donor.getWeight();
+                
             }
-            else if(donor.getFirstName().contains("St. Mary"))
+            else if(donor.getFirstName().toUpperCase().contains("ST. MARY"))
             {
+                
                 totalCollected += donor.getWeight();
                 stMary += donor.getWeight();
+            
             }
-            else if(donor.getFirstName().contains("TEFAP"))
+            else if(donor.getFirstName().toUpperCase().contains("TEFAP"))
             {
+                
                 totalCollected += donor.getWeight();
                 tefap += donor.getWeight();
+            
             }
             else if(donor.getFirstName().contains("#"))
             {
                 totalCollected += donor.getWeight();
                 grocery += donor.getWeight();
             }
-            else if(donor.getDonationSource().contains("ness"))
+            else if(donor.getDonationSource().toUpperCase().contains("NESS"))
             {
+                
                 totalCollected += donor.getWeight();
                 corp += donor.getWeight();
+            
             }
-            else if(donor.getDonationSource().contains("urch"))
+            else if(donor.getDonationSource().toUpperCase().contains("URCH"))
             {
+                
                 totalCollected += donor.getWeight();
                 church += donor.getWeight();
+            
             }
-            else if(donor.getDonationSource().contains("vidual"))
+            else if(donor.getDonationSource().toUpperCase().contains("VIDIUAL"))
             {
+                
                 totalCollected += donor.getWeight();
                 individual += donor.getWeight();
+                
             }
-            dist = served.size() * 40; 
-            
-            
-                    }
         
+        }
+        
+        int totalDonees = 0;
+        
+        for(Donee donee : doneeList)
+        {
+                
+            totalDonees += donee.getHouseHoldTotal();
+                
+        }
+        
+        dist = totalDonees * 40;
         
         totalAfterCollection = start + totalCollected;
         
         finalTotal = totalAfterCollection - waste - dist;
         
     }
-    
+    public void saveTXT(String folderLocation)
+    {
+        
+        try
+        {
+            
+            File file = new File(folderLocation + File.separator +  "September2018.txt");
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            try (PrintWriter outFile = new PrintWriter(bw)) {
+                outFile.println("Start:\t" + start);
+                outFile.println("Grocery:\t" + grocery);
+                outFile.println("Individual:\t" + individual);
+                outFile.println("Corp:\t" + corp);
+                outFile.println("Church:\t" + church);
+                outFile.println("TEFAP:\t" + tefap);
+                outFile.println("St. Mary:\t" + stMary);
+                outFile.println("Sub Total:\t" + totalAfterCollection);
+                outFile.println("Waste:\t" + waste);
+                outFile.println("Distributed:\t" + dist);
+                outFile.println("Final Total:\t" + finalTotal);
+                
+            }
+            
+        }
+        catch(IOException e)
+        {
+            System.out.print("IOException");
+        }
+    }
     
 }
