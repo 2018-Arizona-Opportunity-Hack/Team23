@@ -9,7 +9,7 @@ import java.util.Scanner;
 /**
  * Converter. Converts CSV files to automatically organized output.
  * @author Phillip N, Emilio E, Kai W
- * @version 20.October.2018
+ * @version 21.October.2018
  */
 public class Converter
 {
@@ -25,28 +25,28 @@ public class Converter
         
         gui.setVisible(true);
         
+        // freezes program here, until both donor and donee csv files have been uploaded
         while(!gui.getReady()) {}
         
         File donorFile = gui.donorF, doneeFile = gui.doneeF;
         
         final String home = System.getProperty("user.home");
         final String folderLocation = home + File.separator + "Documents" + File.separator + "NEWPEK";
-        final String fileName = donorFile.getName();
-        final String fileLocation = folderLocation + File.separator + fileName;
         
+        // array of attributes that make up a Donor (Donor Id... Memo)
         String[] attributeArr = new String[25];
         ArrayList<Donor> donorList = new ArrayList<>();
         
+        // similar to attributeArr, but for Donee
         String[] doneeAttributeArr = new String[18];
         ArrayList<Donee> doneeList = new ArrayList<>();
-        
-        System.out.println(fileLocation);
         
         File prevFile = new File("");
         
         try
         {
-         
+            
+            // reads through the Donor csv file and create an array list of Donors
             try (Scanner inputStream = new Scanner(donorFile))
             {
                 
@@ -74,6 +74,7 @@ public class Converter
                 }
             }
            
+            // reads through the Donee csv file and creates an array list of Donees
             try (Scanner inputStream = new Scanner(doneeFile))
             {
                 
@@ -87,8 +88,6 @@ public class Converter
                     
                     List<String> data = parseLine(inputStream.next());
                     
-                    //System.out.println("Index: " + index + "\nData: " + data);
-                    
                     for(int i = 0 ; i < doneeAttributeArr.length ; i++)
                     {
                         
@@ -101,10 +100,12 @@ public class Converter
                 }
             }
             
+            // obtains the would be name of the file from the previous month and makes a new file with that name
             String prevFileName = folderLocation + File.separator + donorList.get(0).getMonthYear(true) + "_" + donorList.get(donorList.size() - 1).getMonthYear(true) + ".txt";
             prevFile = new File(prevFileName);
             
         }
+        // catches if either Doner or Donee csv files do not exist
         catch (FileNotFoundException e)
         {
                     
@@ -112,37 +113,28 @@ public class Converter
             //e.printStackTrace();
         
         }
-        finally
-        {
+        
+        // creates a txtMaker object used for making the organized text
+        txtMaker textFile = new txtMaker(donorList, doneeList, prevFile);
+        
+        // if there is no file from the previous month, request user to input starting inventory weight
+        if(!gui.checkPrevFile(prevFile)) {
             
-            txtMaker textFile = new txtMaker(donorList, doneeList, prevFile);
+            textFile.setStart(gui.start);
             
-            if(!gui.checkPrevFile(prevFile)) {
-                
-                textFile.setStart(gui.start);
-                
-            }
-            
-            gui.changeLabel(textFile.saveTXT(folderLocation, donorList));
-            
-            while(!gui.getCharts()) {}
-            
-            textFile.sourcePieChart(donorList,folderLocation);
-            textFile.wastePieChart(donorList,folderLocation);
         }
+        
+        // changes label to include name of saved text file
+        gui.changeLabel(textFile.saveTXT(folderLocation, donorList));
+        
+        // freezes the program until charts are done being made
+        while(!gui.getCharts()) {}
+        
+        // creates pie charts using data from the Donor array list and places it in the folder location
+        textFile.sourcePieChart(donorList,folderLocation);
+        textFile.wastePieChart(donorList,folderLocation);
     
     }
-    
-    public String sort(ArrayList<Donor> donorList) {
-        
-        String sortedString = "";
-        
-        
-        
-        return sortedString;
-        
-    }
-    
     
     /**
      * parseLine. Unedited source code taken from 

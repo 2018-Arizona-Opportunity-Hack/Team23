@@ -22,13 +22,12 @@ import javax.imageio.ImageIO;
  */
 public class txtMaker 
 {
-    double dist, totalAfterCollection, finalTotal;
     // weights (lbs)
+    double dist, totalAfterCollection, finalTotal;
     double waste = 0, stMary = 0, tefap = 0, grocery = 0, corp = 0, church = 0, individual = 0, start = 0;
+    double totalCollected = 0;
     
     int totalDonees = 0, clients = 0;
-    
-    double totalCollected = 0;
     
     public txtMaker(ArrayList<Donor> donorList, ArrayList<Donee> doneeList, File prevMonth)
     {
