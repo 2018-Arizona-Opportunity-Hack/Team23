@@ -1,10 +1,17 @@
 //package converter; // NetBeans IDE
 
+//package converter; // NetBeans IDE
+
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import javax.imageio.ImageIO;
 
 /**
  * Converter. Converts CSV files to automatically organized output.
@@ -12,6 +19,7 @@ import java.util.Scanner;
  */
 public class Converter
 {
+	String month, year;
 
     /**
      * main. Entry point into the program.
@@ -91,10 +99,18 @@ public class Converter
             
             /*for(int i = 0 ; i < donorList.size() ; i++)
             {
-
                 System.out.println((donorList.get(i)).toString());
-
             }*/
+            
+            //TODO
+            BufferedImage bImage = new BufferedImage(100,100,BufferedImage.TYPE_INT_RGB);
+            Graphics2D g = bImage.createGraphics();
+            g.
+            
+            g.dispose();
+            RenderedImage rImage = bImage;
+            File imageFile = new File("PieChart " + month + ", " + year + ".jpg");
+            ImageIO.write(rImage, "jpg", imageFile);
         
         }
     
