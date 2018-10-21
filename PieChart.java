@@ -2,6 +2,7 @@
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 import javax.swing.JComponent;
 
@@ -56,11 +57,6 @@ class PieChartMaker extends JComponent
 		return chart;
 	}
 	
-	public void paint(Graphics g)
-	{
-		drawChart((Graphics2D) g, getBounds(), chart);
-	}
-	
 	public void drawChart(Graphics2D g, Rectangle a, PieChart[] chart)
 	{
 		double sum = 0;
@@ -69,7 +65,7 @@ class PieChartMaker extends JComponent
 			sum += chart[i].getPercent();
 		}
 		double current = 0;
-		int angle,arcAngle = 0;
+		int angle, arcAngle;
 		for(int i = 0; i < chart.length; i++)
 		{
 			angle = (int)(current/sum * 360);
