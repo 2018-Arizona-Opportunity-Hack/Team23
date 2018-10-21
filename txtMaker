@@ -29,12 +29,24 @@ public class txtMaker
     
     double moneyValue = 0;
     
-    int totalDonees = 0, clients = 0;
+    int totalDonees = 0, clients = 0, newClients = 0, oldClients = 0;
     
     public txtMaker(ArrayList<Donor> donorList, ArrayList<Donee> doneeList, File prevMonth)
     {
         
         clients = doneeList.size();
+        
+        for(Donee donee : doneeList)
+        {
+            if(donee.getNewClient())
+            {
+                newClients++;
+            }
+            else
+            {
+                oldClients++;
+            }
+        }
         
         try
         {
@@ -42,7 +54,7 @@ public class txtMaker
             Scanner inputStream = new Scanner(prevMonth);
             String lastLine = inputStream.nextLine();
             
-            for(int i = 0 ; i < 15 ; i++) {
+            for(int i = 0 ; i < 17 ; i++) {
                 
                 lastLine = inputStream.nextLine();
                 
@@ -198,6 +210,8 @@ public class txtMaker
             try (PrintWriter outFile = new PrintWriter(bw)) {
                 outFile.println("Starting Inventory:\t\t" + start);
                 outFile.println("Number of Clients:\t\t" + clients);
+                outFile.println("Number of Old Clients:\t\t" + oldClients);
+                outFile.println("Number of New Clients:\t\t" + newClients);
                 outFile.println("Total Served:\t\t\t" + totalDonees);
                 outFile.println("Distributed:\t\t\t" + dist);
                 outFile.println();
