@@ -53,8 +53,8 @@ public class Donor
     }
 
     /**
-     * getDonationID. Returns donation ID
-     * @return donationID the donation ID
+     * 
+     * @return donationID
      */
     public int getDonationID()
     {
@@ -62,7 +62,7 @@ public class Donor
     }
 	
     /**
-     * getDonorID. Returns donor ID
+     * 
      * @return donorID the donor ID
      */
     public int getDonorID()
@@ -71,8 +71,8 @@ public class Donor
     }
 
     /**
-     * getCompanyName. Returns the company name
-     * @return companyName the company name
+     * 
+     * @return companyName
      */
     public String getCompanyName()
     {
@@ -80,8 +80,8 @@ public class Donor
     }
 
     /**
-     * getFirstName. Returns the first name
-     * @return firstName the first name
+     * 
+     * @return firstName
      */
     public String getFirstName()
     {
@@ -89,8 +89,8 @@ public class Donor
     }
 
     /**
-     * getMiddleName. Provides the middle name
-     * @return middleName the name in between first and last
+     * 
+     * @return middleName
      */
     public String getMiddleName()
     {
@@ -98,8 +98,8 @@ public class Donor
     }
 
     /**
-     * getLastName. Gets the name after middle name
-     * @return lastName the name that has an equal magnitude in index to first name with middle name as the origin
+     * 
+     * @return lastName
      */
     public String getLastName()
     {
@@ -107,8 +107,8 @@ public class Donor
     }
 
     /**
-     * getEmailAddress. Fetches the address from the ether mail
-     * @return emailAddress the mail address of the web
+     * 
+     * @return emailAddress
      */
     public String getEmailAddress()
     {
@@ -116,8 +116,8 @@ public class Donor
     }
 
     /**
-     * getSpouseName. Spouse name get
-     * @return spouseName the name of someone who pretends to love you unconditionally
+     * 
+     * @return spouseName
      */
     public String getSpouseName()
     {
@@ -125,8 +125,8 @@ public class Donor
     }
 
     /**
-     * getGreeting. Greetings gets does
-     * @return greeting the greeting
+     * 
+     * @return greeting
      */
     public String getGreeting()
     {
@@ -134,8 +134,8 @@ public class Donor
     }
 
     /**
-     * getStreetAddress. Returns the street address
-     * @return streetAddress the street address
+     * 
+     * @return streetAddress
      */
     public String getStreetAddress()
     {
@@ -143,8 +143,8 @@ public class Donor
     }
 
     /**
-     * getAparment. Returns the aparment
-     * @return aparment the aprment
+     * 
+     * @return apartment
      */
     public String getApartment()
     {
@@ -152,8 +152,8 @@ public class Donor
     }
 
     /**
-     * getCity. Returns the city
-     * @return city the city
+     * 
+     * @return city
      */
     public String getCity()
     {
@@ -161,8 +161,8 @@ public class Donor
     }
 
     /**
-     * getState. Returns the area the city lies within
-     * @return state a synonym for country in foreign lands
+     * 
+     * @return state
      */
     public String getState()
     {
@@ -170,8 +170,8 @@ public class Donor
     }
 
     /**
-     * getZipCode. Returns the code which closes
-     * @return zipCode helps close your jacket
+     * 
+     * @return zipCode
      */
     public int getZipCode()
     {
@@ -179,14 +179,18 @@ public class Donor
     }
 
     /**
-     * getDonorType. Returns blood type
-     * @return donorType p
+     * 
+     * @return donorType
      */
     public String getDonorType()
     {
         return donorType;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getDonationType()
     {
         return donationType;
@@ -204,7 +208,7 @@ public class Donor
 
     /**
      * getMonthYear. provides the monthyear for the file name of the new txt file
-     * @return something
+     * @return monthYear
      */
     public String getMonthYear()
     {
@@ -259,8 +263,8 @@ public class Donor
     
     /**
      * getMonthYear. provides the file name for the potential previous month txt file
-     * @param prev
-     * @return something
+     * @param prev unused boolean value used to signify searching of prev txt file
+     * @return monthYear
      */
     public String getMonthYear(boolean prev)
     {
@@ -314,36 +318,64 @@ public class Donor
         return monthYear;
     }
     
+    /**
+     * 
+     * @return foorCategory
+     */
     public String getFoodCategory()
     {
         return foodCategory;
     }
 
+    /**
+     * 
+     * @return foodName
+     */
     public String getFoodName()
     {
         return foodName;
     }
 
+    /**
+     * 
+     * @return quantity
+     */
     public double getQuantity()
     {
         return quantity;
     }
 
+    /**
+     * 
+     * @return quanitityType
+     */
     public String getQuantityType()
     {
         return quantityType;
     }
 
+    /**
+     * 
+     * @return weight
+     */
     public double getWeight()
     {
         return weight;
     }
 
+    /**
+     * 
+     * @return value
+     */
     public double getValue()
     {
         return value;
     }
 
+    /**
+     * 
+     * @return memo
+     */
     public String getMemo()
     {
         return memo;
