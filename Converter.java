@@ -1,35 +1,19 @@
 //package converter; // NetBeans IDE
 
-//package converter; // NetBeans IDE
-
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 /**
  * Converter. Converts CSV files to automatically organized output.
  * @author Phillip N, Emilio E, Kai W
+ * @version 20.October.2018
  */
-public class Converter extends JPanel
+public class Converter
 {
+
     /**
      * main. Entry point into the program.
      * @param args the command line arguments
@@ -47,7 +31,7 @@ public class Converter extends JPanel
         
         Scanner input = new Scanner(System.in);
         
-        System.out.print("Enter name of file: ");
+        System.out.print("Enter name of CSV file of donors for this month: ");
         
         String fileName = input.nextLine();
         
@@ -58,36 +42,80 @@ public class Converter extends JPanel
         String[] attributeArr = new String[25];
         ArrayList<Donor> donorList = new ArrayList<>();
         
+        System.out.print("Enter name of CSV file of donees for this month: ");
+        
+        String doneeFileName = input.nextLine();
+        
+        final String doneeFileLocation = folderLocation + File.separator + doneeFileName + ".csv";
+        
+        File doneeFile = new File(doneeFileLocation);
+        
+        String[] doneeAttributeArr = new String[18];
+        ArrayList<Donee> doneeList = new ArrayList<>();
+        
         System.out.println(fileLocation);
+        
+        File prevFile = new File("");
         
         try
         {
          
-            Scanner inputStream = new Scanner(file);
-            inputStream.useDelimiter("\\n");
-            
-            inputStream.next();
-            
-            // while data exists to be read
-            while(inputStream.hasNext())
+            try (Scanner inputStream = new Scanner(file))
             {
                 
-                List<String> data = parseLine(inputStream.next());
+                inputStream.useDelimiter("\\n");
                 
-                //System.out.println("Index: " + index + "\nData: " + data);
+                inputStream.next();
                 
-                for(int i = 0 ; i < attributeArr.length ; i++)
+                // while data exists to be read
+                while(inputStream.hasNext())
                 {
                     
-                    attributeArr[i] = (data.get(i)).replace("\"","");
+                    List<String> data = parseLine(inputStream.next());
+                    
+                    //System.out.println("Index: " + index + "\nData: " + data);
+                    
+                    for(int i = 0 ; i < attributeArr.length ; i++)
+                    {
+                        
+                        attributeArr[i] = (data.get(i)).replace("\"","");
+                        
+                    }
+                    
+                    donorList.add(new Donor(attributeArr));
                     
                 }
+            }
+           
+            try (Scanner inputStream = new Scanner(doneeFile))
+            {
                 
-                donorList.add(new Donor(attributeArr));
+                inputStream.useDelimiter("\\n");
+                
+                inputStream.next();
+                
+                // while data exists to be read
+                while(inputStream.hasNext())
+                {
                     
+                    List<String> data = parseLine(inputStream.next());
+                    
+                    //System.out.println("Index: " + index + "\nData: " + data);
+                    
+                    for(int i = 0 ; i < doneeAttributeArr.length ; i++)
+                    {
+                        
+                        doneeAttributeArr[i] = (data.get(i)).replace("\"","");
+                        
+                    }
+                    
+                    doneeList.add(new Donee(doneeAttributeArr));
+                    
+                }
             }
             
-            inputStream.close();
+            String prevFileName = folderLocation + File.separator + donorList.get(0).getMonthYear(true) + "_" + donorList.get(donorList.size() - 1).getMonthYear(true) + ".txt";
+            prevFile = new File(prevFileName);
             
         }
         catch (FileNotFoundException e)
@@ -100,42 +128,14 @@ public class Converter extends JPanel
         finally
         {
             
-            ArrayList<Donee> doneeList = new ArrayList<>();
+            txtMaker textFile = new txtMaker(donorList, doneeList, prevFile);
             
-            txtMaker textFile = new txtMaker(donorList, doneeList);
-            
-            textFile.saveTXT(folderLocation);
-            
-            Color[]color = {Color.yellow,Color.blue, Color.red, Color.green};
-            Rectangle a = new Rectangle(0, 0, 1000, 1000);
-            double[] percent = {20, 5, 35, 8};
-            String[] name = {"bob", "fred", "hi", "bye"};
-            
-           
-            
-            BufferedImage bImage = new BufferedImage(1000,1000,BufferedImage.TYPE_INT_RGB);
-            Graphics2D g = bImage.createGraphics();
-            
-            PieChartMaker pCM = new PieChartMaker();
-            PieChart[] chart = pCM.createChart(color.length, color, percent, name);
-            pCM.drawChart(g, a, chart);
-            RenderedImage rImage = bImage;
-            File imageFile = new File("PieChart.jpg");
-            //File imageFile = new File("PieChart " + month + ", " + year + ".jpg");
-            try 
-            {
-				ImageIO.write(rImage, "jpg", imageFile);
-			} 
-            catch (IOException e) 
-            {
-				e.printStackTrace();
-			}
-            
+            textFile.saveTXT(folderLocation, donorList);
+        
         }
-
     
     }
-
+    
     public String sort(ArrayList<Donor> donorList) {
         
         String sortedString = "";
@@ -145,6 +145,7 @@ public class Converter extends JPanel
         return sortedString;
         
     }
+    
     
     /**
      * parseLine. Unedited source code taken from 
