@@ -3,6 +3,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -19,7 +20,7 @@ public class Converter
     public static void main(String[] args)
     {
         
-        //
+        // Allows us to run on any OS
         final String home = System.getProperty("user.home");
         
         final String folderLocation = home + File.separator + "Documents" + File.separator + "NEWPEK";
@@ -39,7 +40,6 @@ public class Converter
         
         String[] attributeArr = new String[25];
         ArrayList<Donor> donorList = new ArrayList<>();
-        int index = 0, count = 0;
         
         System.out.println(fileLocation);
         
@@ -47,37 +47,27 @@ public class Converter
         {
          
             Scanner inputStream = new Scanner(file);
-            inputStream.useDelimiter(",|\\n");
+            inputStream.useDelimiter("\\n");
+            
+            inputStream.next();
             
             // while data exists to be read
             while(inputStream.hasNext())
             {
                 
-                String data = inputStream.next();
-            
-                // gets rid of quotes
-                data = data.replace("\"", "");
+                List<String> data = parseLine(inputStream.next());
                 
-                attributeArr[index] = data;
+                //System.out.println("Index: " + index + "\nData: " + data);
                 
-                index++;
-                
-                if(index > 24)
+                for(int i = 0 ; i < attributeArr.length ; i++)
                 {
-                
-                    index = 0;
+                    
+                    attributeArr[i] = (data.get(i)).replace("\"","");
                     
                 }
                 
-                if(count > 24 && index > 24)
-                {
+                donorList.add(new Donor(attributeArr));
                     
-                    donorList.add(new Donor(attributeArr));
-                    
-                }
-                
-                count++;
-                
             }
             
             inputStream.close();
@@ -90,7 +80,18 @@ public class Converter
             //e.printStackTrace();
         
         }
+        finally
+        {
+            
+            for(int i = 0 ; i < donorList.size() ; i++)
+            {
+
+                System.out.println((donorList.get(i)).toString());
+
+            }
         
+        }
+    
     }
     
     public String sort(ArrayList<Donor> donorList) {
@@ -101,6 +102,85 @@ public class Converter
         
         return sortedString;
         
+    }
+    
+    /**
+     * parseLine. Unedited source code taken from 
+     * https://www.mkyong.com/java/how-to-read-and-parse-csv-file-in-java/
+     * 
+     * @param inputLine, a row of elements from an CSV file.
+     * @return result, a list composed of elements, where an element are the
+     * group of characters within the '"' symbol.
+     */
+    public static List<String> parseLine(String inputLine) {
+
+        final char DEFAULT_QUOTE = '"', DEFAULT_SEPARATOR = ',';
+        List<String> result = new ArrayList<>();
+
+        //if empty, return empty
+        if (inputLine == null && inputLine.isEmpty()) {
+            return result;
+        }
+
+        StringBuffer curVal = new StringBuffer();
+        boolean inQuotes = false;
+        boolean startCollectChar = false;
+        boolean doubleQuotesInColumn = false;
+
+        char[] chars = inputLine.toCharArray();
+
+        OUTER:
+        for (char ch : chars) {
+            if (inQuotes) {
+                startCollectChar = true;
+                if (ch == DEFAULT_QUOTE) {
+                    inQuotes = false;
+                    doubleQuotesInColumn = false;
+                } else {
+
+                    //Fixed : allow "" in custom quote enclosed
+                    if (ch == '\"') {
+                        if (!doubleQuotesInColumn) {
+                            curVal.append(ch);
+                            doubleQuotesInColumn = true;
+                        }
+                    } else {
+                        curVal.append(ch);
+                    }
+
+                }
+            } else {
+                switch (ch) {
+                    case DEFAULT_QUOTE:
+                        inQuotes = true;
+                        //Fixed : allow "" in empty quote enclosed
+                        if (chars[0] != '"' && DEFAULT_QUOTE == '\"') {
+                            curVal.append('"');
+                        }   //double quotes in column will hit this!
+                        if (startCollectChar) {
+                            curVal.append('"');
+                        }   break;
+                    case DEFAULT_SEPARATOR:
+                        result.add(curVal.toString());
+                        curVal = new StringBuffer();
+                        startCollectChar = false;
+                        break;
+                //ignore LF characters
+                    case '\r':
+                        break;
+                    case '\n':
+                        //the end, break!
+                        break OUTER;
+                    default:
+                        curVal.append(ch);
+                        break;
+                }
+            }
+        }
+
+        result.add(curVal.toString());
+
+        return result;
     }
     
 }
