@@ -145,7 +145,7 @@ public class txtMaker
         sourcePieChart.createChart(6, color, percent, name);
         sourcePieChart.drawChart(g, a, chart);
         RenderedImage rImage = bImage;
-        File imageFile = new File(folderLocation + File.separator + "sourcePie"+donorList.get(0).getMonthYear()+".jpg");
+        File imageFile = new File(folderLocation + File.separator + "sourcePie"+donorList.get(0).getMonthYear()+"_"+donorList.get(donorList.size() - 1).getMonthYear()+".jpg");
         
         try 
             {
