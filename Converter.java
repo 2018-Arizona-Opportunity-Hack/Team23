@@ -1,24 +1,35 @@
 //package converter; // NetBeans IDE
 
+//package converter; // NetBeans IDE
+
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * Converter. Converts CSV files to automatically organized output.
  * @author Phillip N, Emilio E, Kai W
  */
-public class Converter
+public class Converter extends JPanel
 {
-	String month, year;
-
     /**
      * main. Entry point into the program.
      * @param args the command line arguments
@@ -95,25 +106,36 @@ public class Converter
             
             textFile.saveTXT(folderLocation);
             
-            /*for(int i = 0 ; i < donorList.size() ; i++)
-            {
-                System.out.println((donorList.get(i)).toString());
-            }*/
+            Color[]color = {Color.yellow,Color.blue, Color.red, Color.green};
+            Rectangle a = new Rectangle(0, 0, 1000, 1000);
+            double[] percent = {20, 5, 35, 8};
+            String[] name = {"bob", "fred", "hi", "bye"};
             
-            //TODO
-            BufferedImage bImage = new BufferedImage(100,100,BufferedImage.TYPE_INT_RGB);
+           
+            
+            BufferedImage bImage = new BufferedImage(1000,1000,BufferedImage.TYPE_INT_RGB);
             Graphics2D g = bImage.createGraphics();
-            g.
             
-            g.dispose();
+            PieChartMaker pCM = new PieChartMaker();
+            PieChart[] chart = pCM.createChart(color.length, color, percent, name);
+            pCM.drawChart(g, a, chart);
             RenderedImage rImage = bImage;
-            File imageFile = new File("PieChart " + month + ", " + year + ".jpg");
-            ImageIO.write(rImage, "jpg", imageFile);
-        
+            File imageFile = new File("PieChart.jpg");
+            //File imageFile = new File("PieChart " + month + ", " + year + ".jpg");
+            try 
+            {
+				ImageIO.write(rImage, "jpg", imageFile);
+			} 
+            catch (IOException e) 
+            {
+				e.printStackTrace();
+			}
+            
         }
+
     
     }
-    
+
     public String sort(ArrayList<Donor> donorList) {
         
         String sortedString = "";
