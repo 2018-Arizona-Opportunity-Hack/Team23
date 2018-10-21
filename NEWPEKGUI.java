@@ -34,6 +34,7 @@ public class NEWPEKGUI extends javax.swing.JFrame {
         openFileChooser.setCurrentDirectory(new File(folderLocation));
         openFileChooser.setFileFilter(new FileNameExtensionFilter("CSV", "csv"));
         txtField.setEditable(false);
+        confirmBt.setEnabled(false);
     }
 
     public boolean getReady()
@@ -209,7 +210,16 @@ public class NEWPEKGUI extends javax.swing.JFrame {
     }                                           
 
     private void confirmBtActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        startReady = true;
+        if(txtField.getText().matches("[0-9]+"))
+        {
+            startReady = true;
+            txtField.setEditable(false);
+            confirmBt.setEnabled(false);
+        }
+        else
+        {
+            txtLabel.setText("Invalid Input");
+        }
     }                                         
 
     private void createChartsBtActionPerformed(java.awt.event.ActionEvent evt) {                                               
@@ -236,6 +246,7 @@ public class NEWPEKGUI extends javax.swing.JFrame {
         {
             txtLabel.setText("Please input starting inventory (lbs): ");
             txtField.setEditable(true);
+            confirmBt.setEnabled(true);
             
             while(!startReady) {}
             
