@@ -1,36 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package opportunity2018;
+//package converter; // NetBeans IDE
 
 import java.util.*;
-import java.util.List;
-import java.util.Arrays;
+
 /**
- *
- * @author CapedBaldy
+ * 
+ * @author Emilio E, Phillip N, Kai W.
+ * @version 20.October.2018
  */
 public class txtMaker 
 {
-    String strtDate, endDate;
-    double startAmnt, dist, totalAfterCollection, finalTotal;
-    double waste, stMary, tefap, grocery, corp, church, individual = 0;
-    List<String> srcs;
-    List<Double> amnt;
+    double dist, totalAfterCollection, finalTotal;
+    double waste, stMary, tefap, grocery, corp, church, individual, start = 0;
     
     double totalCollected = 0;
     
-    public txtMaker(ArrayList<Donor> donations, ArrayList<int> customers)
+    public txtMaker(ArrayList<Donor> donorList, ArrayList<Integer> served)
     {
-        strtDate = strt;
-        endDate = end;
-        srcs = Sources;
-        amnt = donations[22];
-        dist = distributed;
         
-        for (Double donor : donations) 
+        for (Donor donor : donorList) 
         {
             if(donor.getLastName()=="Waste")
             {
@@ -66,15 +53,16 @@ public class txtMaker
                 totalCollected += donor.getWeight();
                 individual += donor.getWeight();
             }
-            dist = customers.size() * 40; 
+            dist = served.size() * 40; 
             
             
                     }
         
         
-        totalAfterCollection = startAmnt + totalCollected;
+        totalAfterCollection = start + totalCollected;
         
         finalTotal = totalAfterCollection - waste - dist;
+        
     }
     
     
