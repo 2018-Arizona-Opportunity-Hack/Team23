@@ -39,9 +39,16 @@ public class txtMaker
         {
 
             Scanner inputStream = new Scanner(prevMonth);
-            String firstLine = inputStream.nextLine();
-            firstLine = firstLine.replace("Starting Inventory:\t\t","");
-            start = Double.parseDouble(firstLine);
+            String lastLine = inputStream.nextLine();
+            
+            for(int i = 0 ; i < 15 ; i++) {
+                
+                lastLine = inputStream.nextLine();
+                
+            }
+            
+            lastLine = lastLine.replace("Total:\t\t\t\t","");
+            start = Double.parseDouble(lastLine);
             inputStream.close();
 
         } catch (FileNotFoundException ex)
@@ -119,8 +126,8 @@ public class txtMaker
         
     }
     
-    Rectangle a = new Rectangle(0, 0, 1000, 1000);
-    BufferedImage bImage = new BufferedImage(1000,1000,BufferedImage.TYPE_INT_RGB);
+    Rectangle a = new Rectangle(0, 0, 800, 800);
+    BufferedImage bImage = new BufferedImage(800,800,BufferedImage.TYPE_INT_RGB);
     Graphics2D g = bImage.createGraphics();
     
     public void setStart(double in)
@@ -128,18 +135,18 @@ public class txtMaker
         start = in;
     }
     
-    public void sourcePieChart(ArrayList<Donor> donorList)
+    public void sourcePieChart(ArrayList<Donor> donorList, String folderLocation)
     {
         Color[] color = {Color.blue, Color.green, Color.orange, Color.red, Color.magenta, Color.yellow};
         double[] percent = {grocery, individual, corp, church, tefap, stMary};
         String[] name = {"Grocery Store","Individual","Corperate/Organization","Church","TEFAP","St. Mary's - senior food box"};
         
         PieChartMaker sourcePieChart = new PieChartMaker();
-        PieChart[] chart = sourcePieChart.createChart(color.length, color, percent, name);
+        PieChart[] chart = sourcePieChart.createChart(6, color, percent, name);
         sourcePieChart.createChart(6, color, percent, name);
         sourcePieChart.drawChart(g, a, chart);
         RenderedImage rImage = bImage;
-        File imageFile = new File("sourcePie"+donorList.get(0).getMonthYear()+".jpg");
+        File imageFile = new File(folderLocation + File.separator + "sourcePie"+donorList.get(0).getMonthYear()+".jpg");
         
         try 
             {
@@ -150,18 +157,18 @@ public class txtMaker
 				e.printStackTrace();
 			}
     }
-    public void wastePieChart(ArrayList<Donor> donorList)
+    public void wastePieChart(ArrayList<Donor> donorList, String folderLocation)
     {
         Color[] color = {Color.green, Color.black};
-        double[] percent = {totalCollected, waste};
-        String[] name = {"totalCollected", "waste"};
+        double[] percent = {dist, waste};
+        String[] name = {"Distributed", "waste"};
                 
         PieChartMaker sourcePieChart = new PieChartMaker();
-        PieChart[] chart = sourcePieChart.createChart(color.length, color, percent, name);
-        sourcePieChart.createChart(6, color, percent, name);
+        PieChart[] chart = sourcePieChart.createChart(2, color, percent, name);
+        sourcePieChart.createChart(2, color, percent, name);
         sourcePieChart.drawChart(g, a, chart);
         RenderedImage rImage = bImage;
-        File imageFile = new File("wastePie"+donorList.get(0).getMonthYear()+".jpg");
+        File imageFile = new File(folderLocation + File.separator + "wastePie"+donorList.get(0).getMonthYear()+".jpg");
         
         try 
             {
