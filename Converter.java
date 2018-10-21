@@ -21,34 +21,23 @@ public class Converter
     public static void main(String[] args)
     {
         
-        // Allows us to run on any OS
+        NEWPEKGUI gui = new NEWPEKGUI();
+        
+        gui.setVisible(true);
+        
+        while(!gui.getReady()) {}
+        
+        File donorFile = gui.donorF, doneeFile = gui.doneeF;
+        
         final String home = System.getProperty("user.home");
-        
         final String folderLocation = home + File.separator + "Documents" + File.separator + "NEWPEK";
+        final String fileName = donorFile.getName();
+        final String fileLocation = folderLocation + File.separator + fileName;
         
-        File newFold = new File(folderLocation);
-        newFold.mkdir();
-        
-        Scanner input = new Scanner(System.in);
-        
-        System.out.print("Enter name of CSV file of donors for this month: ");
-        
-        String fileName = input.nextLine();
-        
-        final String fileLocation = folderLocation + File.separator + fileName + ".csv";
-
-        File file = new File(fileLocation);
+        System.out.println(fileLocation);
         
         String[] attributeArr = new String[25];
         ArrayList<Donor> donorList = new ArrayList<>();
-        
-        System.out.print("Enter name of CSV file of donees for this month: ");
-        
-        String doneeFileName = input.nextLine();
-        
-        final String doneeFileLocation = folderLocation + File.separator + doneeFileName + ".csv";
-        
-        File doneeFile = new File(doneeFileLocation);
         
         String[] doneeAttributeArr = new String[18];
         ArrayList<Donee> doneeList = new ArrayList<>();
@@ -60,7 +49,7 @@ public class Converter
         try
         {
          
-            try (Scanner inputStream = new Scanner(file))
+            try (Scanner inputStream = new Scanner(donorFile))
             {
                 
                 inputStream.useDelimiter("\\n");
@@ -130,7 +119,13 @@ public class Converter
             
             txtMaker textFile = new txtMaker(donorList, doneeList, prevFile);
             
-            textFile.saveTXT(folderLocation, donorList);
+            if(!gui.checkPrevFile(prevFile)) {
+                
+                textFile.setStart(gui.start);
+                
+            }
+            
+            gui.changeLabel(textFile.saveTXT(folderLocation, donorList));
         
         }
     
