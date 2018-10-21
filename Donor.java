@@ -8,9 +8,9 @@
 public class Donor 
 {
 
-    final private int donationID, donorID, zipCode;
+    final private int donationID, donorID;
     final private double weight, value, quantity;
-    final private String companyName, firstName, middleName, lastName, emailAddress, spouseName, greeting, streetAddress, apartment, city, state, donorType, donationType, donationSource, donatedOn, foodCategory, foodName, quantityType, memo;
+    final private String zipCode, companyName, firstName, middleName, lastName, emailAddress, spouseName, greeting, streetAddress, apartment, city, state, donorType, donationType, donationSource, donatedOn, foodCategory, foodName, quantityType, memo;
     
     public Donor(String[] arr)
     {
@@ -28,16 +28,7 @@ public class Donor
 	apartment = arr[10];
 	city = arr[11];
 	state = arr[12];
-        if(!arr[13].equals(""))
-        {
-            zipCode = Integer.parseInt(arr[13]);
-        }
-        else
-        {
-            
-            zipCode = -1;
-            
-        }
+        zipCode = arr[13];
 	donorType = arr[14];
 	donationType = arr[15];
 	donationSource = arr[16];
@@ -173,7 +164,7 @@ public class Donor
      * 
      * @return zipCode
      */
-    public int getZipCode()
+    public String getZipCode()
     {
         return zipCode;
     }
