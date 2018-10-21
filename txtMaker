@@ -93,13 +93,14 @@ public class txtMaker
         finalTotal = totalAfterCollection - waste - dist;
         
     }
-    public void saveTXT(String folderLocation)
+    public void saveTXT(String folderLocation, ArrayList<Donor> donorList)
     {
         
         try
         {
             
-            File file = new File(folderLocation + File.separator +  "September2018.txt");
+            String fileName = donorList.get(0).getMonthYear() + "_" + donorList.get(donorList.size()).getMonthYear() + ".txt";
+            File file = new File(folderLocation + File.separator +  fileName);
             FileWriter fw = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(fw);
             try (PrintWriter outFile = new PrintWriter(bw)) {
