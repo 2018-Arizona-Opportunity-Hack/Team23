@@ -206,34 +206,34 @@ public class Donor
         String[] date = donatedOn.split("-");
         String month = "";
         String monthYear;
-        String year = date[2];
-        switch (date[0])
+        String year = date[0];
+        switch (date[1])
         {
-            case"1":
+            case"01":
                 month = "January";
                 break;
-            case"2":
+            case"02":
                 month = "Febreuary";
                 break;
-            case"3":
+            case"03":
                 month = "March";
                 break;
-            case"4":
+            case"04":
                 month = "April";
                 break;
-            case"5":
+            case"05":
                 month = "May";
                 break;
-            case"6":
+            case"06":
                 month = "June";
                 break;
-            case"7":
+            case"07":
                 month = "July";
                 break;
-            case"8":
+            case"08":
                 month = "August";
                 break;
-            case"9":
+            case"09":
                 month = "September";
                 break;
             case"10":
@@ -262,9 +262,8 @@ public class Donor
         String[] date = donatedOn.split("-");
         String month = "";
         String monthYear;
-        System.out.println("date[0]: " + date[0]);
-        String year = date[2];
-        switch (Integer.parseInt(date[0]) - 1)
+        String year = date[0];
+        switch (Integer.parseInt(date[1]) - 1)
         {
             case 1:
                 month = "January";
