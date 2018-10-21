@@ -21,6 +21,11 @@ public class Converter
     public static void main(String[] args)
     {
         
+        boolean exit = false;
+        
+        do
+        {
+        
         NEWPEKGUI gui = new NEWPEKGUI();
         
         gui.setVisible(true);
@@ -38,7 +43,7 @@ public class Converter
         ArrayList<Donor> donorList = new ArrayList<>();
         
         // similar to attributeArr, but for Donee
-        String[] doneeAttributeArr = new String[18];
+        String[] doneeAttributeArr = new String[19];
         ArrayList<Donee> doneeList = new ArrayList<>();
         
         File prevFile = new File("");
@@ -133,7 +138,15 @@ public class Converter
         // creates pie charts using data from the Donor array list and places it in the folder location
         textFile.sourcePieChart(donorList,folderLocation);
         textFile.wastePieChart(donorList,folderLocation);
-    
+        
+        while(!gui.getReset() && !gui.getExit()){}
+        
+        if(gui.getExit())
+        {
+            exit = true;
+        }
+        
+        } while(!exit);
     }
     
     /**
