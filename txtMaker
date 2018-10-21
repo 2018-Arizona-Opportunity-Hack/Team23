@@ -27,6 +27,8 @@ public class txtMaker
     double waste = 0, stMary = 0, tefap = 0, grocery = 0, corp = 0, church = 0, individual = 0, start = 0;
     double totalCollected = 0;
     
+    double moneyValue = 0;
+    
     int totalDonees = 0, clients = 0;
     
     public txtMaker(ArrayList<Donor> donorList, ArrayList<Donee> doneeList, File prevMonth)
@@ -123,6 +125,9 @@ public class txtMaker
         
         finalTotal = totalAfterCollection - waste - dist;
         
+        moneyValue = 1.67 * finalTotal;
+        moneyValue = Double.parseDouble(String.format("%.2f", moneyValue));
+        
     }
     
     Rectangle a = new Rectangle(0, 0, 800, 800);
@@ -207,7 +212,7 @@ public class txtMaker
                 outFile.println("Total:\t\t\t\t" + totalAfterCollection);
                 outFile.println("Waste (minus):\t\t\t" + waste);
                 outFile.println("Total:\t\t\t\t" + finalTotal);
-                
+                outFile.println("Money Value:\t\t\t" + moneyValue);
                 
             }
             
