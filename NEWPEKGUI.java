@@ -16,7 +16,7 @@ public class NEWPEKGUI extends javax.swing.JFrame {
 
     private final JFileChooser openFileChooser;
     File donorF, doneeF;
-    private volatile boolean ready, startReady, chartReady;
+    private volatile boolean ready, startReady, chartReady, reset, exit;
     double start;
     
     /**
@@ -26,6 +26,8 @@ public class NEWPEKGUI extends javax.swing.JFrame {
         ready = false;
         startReady = false;
         chartReady = false;
+        reset = false;
+        exit = false;
         initComponents();
         // Allows us to run on any OS
         final String home = System.getProperty("user.home");
@@ -51,6 +53,20 @@ public class NEWPEKGUI extends javax.swing.JFrame {
         
     }
     
+    public boolean getReset()
+    {
+        
+        return reset;
+        
+    }
+    
+    public boolean getExit()
+    {
+        
+        return exit;
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -71,6 +87,8 @@ public class NEWPEKGUI extends javax.swing.JFrame {
         confirmBt = new javax.swing.JButton();
         createChartsBt = new javax.swing.JButton();
         chartsLabel = new javax.swing.JLabel();
+        resetBt = new javax.swing.JButton();
+        exitBt = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
@@ -125,6 +143,20 @@ public class NEWPEKGUI extends javax.swing.JFrame {
         chartsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         chartsLabel.setText("...");
 
+        resetBt.setText("Reset");
+        resetBt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetBtActionPerformed(evt);
+            }
+        });
+
+        exitBt.setText("Exit");
+        exitBt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitBtActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -149,6 +181,12 @@ public class NEWPEKGUI extends javax.swing.JFrame {
                             .addComponent(donorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(txtLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(169, 169, 169)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(resetBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(exitBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,7 +211,11 @@ public class NEWPEKGUI extends javax.swing.JFrame {
                 .addComponent(createChartsBt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chartsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(resetBt)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exitBt)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -226,6 +268,16 @@ public class NEWPEKGUI extends javax.swing.JFrame {
         chartReady = true;
         chartsLabel.setText("Charts successfully downloaded.");
     }                                              
+
+    private void exitBtActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        exit = true;
+        System.exit(0);
+    }                                      
+
+    private void resetBtActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        reset = true;
+        this.dispose();
+    }                                       
 
     public void changeLabel(String txtName)
     {
@@ -301,7 +353,9 @@ public class NEWPEKGUI extends javax.swing.JFrame {
     private javax.swing.JLabel doneeLabel;
     private javax.swing.JButton donorFileBt;
     private javax.swing.JLabel donorLabel;
+    private javax.swing.JButton exitBt;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton resetBt;
     private javax.swing.JTextField txtField;
     private javax.swing.JLabel txtLabel;
     // End of variables declaration                   
