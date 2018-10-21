@@ -1,6 +1,9 @@
+//package converter; // NetBeans IDE
+
 /**
  * Donor. Organizes the attributes into their respective donors.
- * @author Phillip N, Emilio E, Kai W
+ * @author Kai W, Phillip N, Emilio E.
+ * @version 20.October.2018
  */
 public class Donor 
 {
@@ -138,7 +141,7 @@ public class Donor
     {
         return donatedOn;
     }
-    
+
     public String getMonthYear()
     {
         String[] date = donatedOn.split("/");
@@ -176,7 +179,7 @@ public class Donor
         monthYear = month + year;
         return monthYear;
     }
-
+    
     public String getFoodCategory()
     {
         return foodCategory;
