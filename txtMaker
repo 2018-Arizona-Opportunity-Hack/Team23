@@ -47,32 +47,7 @@ public class txtMaker
         } catch (FileNotFoundException ex)
         {
 
-            //System.out.println("File does not exist.");
-            Scanner scanner = new Scanner(System.in);
-            boolean exit = false;
-            
-            do
-            {
-                
-                System.out.print("Please input starting inventory (lbs): ");
-                
-                if(scanner.hasNextDouble()) {
-                    
-                   exit = true;
-                    
-                }
-                else
-                {
-                    
-                    System.out.println("Invalid Inventory(lbs)");
-                    scanner.next();
-                    
-                }
-                
-            } while(!exit);
-            
-            start = scanner.nextDouble();
-            scanner.close();
+            System.out.println("File does not exist.");
         
         }
         
@@ -148,6 +123,11 @@ public class txtMaker
     BufferedImage bImage = new BufferedImage(1000,1000,BufferedImage.TYPE_INT_RGB);
     Graphics2D g = bImage.createGraphics();
     
+    public void setStart(double in)
+    {
+        start = in;
+    }
+    
     public void sourcePieChart(ArrayList<Donor> donorList)
     {
         Color[] color = {Color.blue, Color.green, Color.orange, Color.red, Color.magenta, Color.yellow};
@@ -192,13 +172,15 @@ public class txtMaker
 				e.printStackTrace();
 			}
     }
-    public void saveTXT(String folderLocation, ArrayList<Donor> donorList)
+    public String saveTXT(String folderLocation, ArrayList<Donor> donorList)
     {
+     
+        String fileName = "";
         
         try
         {
             
-            String fileName = donorList.get(0).getMonthYear() + "_" + donorList.get(donorList.size() - 1).getMonthYear() + ".txt";
+            fileName = donorList.get(0).getMonthYear() + "_" + donorList.get(donorList.size() - 1).getMonthYear() + ".txt";
             File file = new File(folderLocation + File.separator +  fileName);
             FileWriter fw = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(fw);
@@ -228,6 +210,9 @@ public class txtMaker
         {
             System.out.print("IOException");
         }
+        
+        return(fileName);
+        
     }
     
 }
