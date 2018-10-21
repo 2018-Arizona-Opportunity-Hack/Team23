@@ -83,12 +83,18 @@ public class Converter
         finally
         {
             
-            for(int i = 0 ; i < donorList.size() ; i++)
+            ArrayList<Donee> doneeList = new ArrayList<>();
+            
+            txtMaker textFile = new txtMaker(donorList, doneeList);
+            
+            textFile.saveTXT(folderLocation);
+            
+            /*for(int i = 0 ; i < donorList.size() ; i++)
             {
 
                 System.out.println((donorList.get(i)).toString());
 
-            }
+            }*/
         
         }
     
