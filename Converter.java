@@ -34,8 +34,6 @@ public class Converter
         final String fileName = donorFile.getName();
         final String fileLocation = folderLocation + File.separator + fileName;
         
-        System.out.println(fileLocation);
-        
         String[] attributeArr = new String[25];
         ArrayList<Donor> donorList = new ArrayList<>();
         
@@ -126,7 +124,11 @@ public class Converter
             }
             
             gui.changeLabel(textFile.saveTXT(folderLocation, donorList));
-        
+            
+            while(!gui.getCharts()) {}
+            
+            textFile.sourcePieChart(donorList,folderLocation);
+            textFile.wastePieChart(donorList,folderLocation);
         }
     
     }

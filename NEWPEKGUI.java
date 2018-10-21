@@ -16,7 +16,7 @@ public class NEWPEKGUI extends javax.swing.JFrame {
 
     private final JFileChooser openFileChooser;
     File donorF, doneeF;
-    private volatile boolean ready, startReady;
+    private volatile boolean ready, startReady, chartReady;
     double start;
     
     /**
@@ -25,6 +25,7 @@ public class NEWPEKGUI extends javax.swing.JFrame {
     public NEWPEKGUI() {
         ready = false;
         startReady = false;
+        chartReady = false;
         initComponents();
         // Allows us to run on any OS
         final String home = System.getProperty("user.home");
@@ -39,6 +40,13 @@ public class NEWPEKGUI extends javax.swing.JFrame {
     {
         
         return ready;
+        
+    }
+    
+    public boolean getCharts()
+    {
+        
+        return chartReady;
         
     }
     
@@ -60,6 +68,8 @@ public class NEWPEKGUI extends javax.swing.JFrame {
         txtLabel = new javax.swing.JLabel();
         txtField = new javax.swing.JTextField();
         confirmBt = new javax.swing.JButton();
+        createChartsBt = new javax.swing.JButton();
+        chartsLabel = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -104,19 +114,31 @@ public class NEWPEKGUI extends javax.swing.JFrame {
             }
         });
 
+        createChartsBt.setText("Create Pie Charts");
+        createChartsBt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createChartsBtActionPerformed(evt);
+            }
+        });
+
+        chartsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        chartsLabel.setText("...");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(chartsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(createChartsBt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(txtField)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(confirmBt))
-                    .addComponent(createTXTBt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                    .addComponent(createTXTBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(donorFileBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(doneeFileBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -124,7 +146,7 @@ public class NEWPEKGUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(doneeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
                             .addComponent(donorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(txtLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -146,7 +168,11 @@ public class NEWPEKGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(confirmBt))
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(createChartsBt)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chartsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         pack();
@@ -185,6 +211,11 @@ public class NEWPEKGUI extends javax.swing.JFrame {
     private void confirmBtActionPerformed(java.awt.event.ActionEvent evt) {                                          
         startReady = true;
     }                                         
+
+    private void createChartsBtActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        chartReady = true;
+        chartsLabel.setText("Charts successfully downloaded.");
+    }                                              
 
     public void changeLabel(String txtName)
     {
@@ -251,7 +282,9 @@ public class NEWPEKGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify                     
+    private javax.swing.JLabel chartsLabel;
     private javax.swing.JButton confirmBt;
+    private javax.swing.JButton createChartsBt;
     private javax.swing.JButton createTXTBt;
     private javax.swing.JButton doneeFileBt;
     private javax.swing.JLabel doneeLabel;
